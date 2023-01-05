@@ -37,6 +37,9 @@
     )))
     (define eres (engine-run timeout engine0))
     (define esol (engine-result engine0))
+    (when (not output-smt?)
+        (delete-file temp-path)
+    )
     (cond
         [(! eres)
             ; need to kill the process
@@ -58,5 +61,5 @@
                 [else (cons 'else out-str)]
             )
         ]
-    )
+    ) 
 )

@@ -95,7 +95,7 @@
             ; perform optimization
             (define optimized-cmds ((optimizer:optimize) final-cmds))
             (define final-str (string-join ((rint:interpret-r1cs) optimized-cmds) "\n"))
-            (define res ((solver:solve) final-str arg-timeout #:output-smt? #f))
+            (define res ((solver:solve) final-str arg-timeout #:output-smt? arg-smt))
             (cond
                 [(equal? 'unsat (car res))
                     (printf "verified.\n")
@@ -112,8 +112,6 @@
                     (set! tmp-ul (cons i tmp-ul))
                 ]
             )
-            (when arg-smt
-                (printf "    # smt path: ~a\n" (solver:state-smt-path)))
         )
         ; return
         (if changed?
